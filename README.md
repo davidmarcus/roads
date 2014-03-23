@@ -3,6 +3,8 @@ roads
 
 An analysis of road network optimization
 
+Also, see the wiki for non-code analysis, specifically the page on [Analyzing regular tesselations](https://github.com/davidmarcus/roads/wiki/Analyzing-regular-tesselations).
+
 # Installation
 ```bash
 sudo apt-get -y install ipython
