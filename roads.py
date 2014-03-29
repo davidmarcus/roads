@@ -4,7 +4,7 @@ import random
 import math
 import numpy
 
-X = Y = 4 # default dimensions for the road graph
+X = Y = 10 # default dimensions for the road graph
 
 class RoadGraph(nx.Graph):
 
@@ -30,10 +30,13 @@ class RoadGraph(nx.Graph):
         return cls.from_graph(G)
 
     # visualization
-    def show(self):
+    def show(self, highlight=set()):
         """Draw the graph"""
-        nx.draw_networkx(self, pos={n: n for n in self.nodes_iter()}, with_labels=False, node_size=20)
+        nx.draw_networkx(self, pos={n: n for n in self.nodes_iter()}, node_color=['b' if node in highlight else 'r' for node in self.nodes_iter()], with_labels=False, node_size=20)
         plt.show()
+
+    def show_isochrone(self, node, distance):
+        self.show(highlight=self.isochrone_nodes(node, distance))
 
     # metrics
     @property
@@ -46,6 +49,9 @@ class RoadGraph(nx.Graph):
         """The mean path length between nodes in the graph"""
         return numpy.mean([nx.dijkstra_path_length(self, node0, node1) for node0 in self.nodes() for node1 in self.nodes() if isinstance(node0[0], int) and isinstance(node1[0], int)])
         
+    def isochrone_nodes(self, node, distance):
+        return set(k for k, v in nx.shortest_path_length(self, node, weight='weight').items() if v <= distance)
+
     # optimization
     def get_removal_target(self):
         """Find an edge to drop"""
