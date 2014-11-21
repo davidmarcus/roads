@@ -46,7 +46,7 @@ show(G)
 ```
 ###Add or remove edges, depending on whether there is capacity for a new edge without exceeding the target graph_length
 ```python
-for i in xrange(10): # run 10 iterations of adding or removing edges
+for i in xrange(10):  # run 10 iterations of adding or removing edges
   G.iterate()
 show(G)
 ```
